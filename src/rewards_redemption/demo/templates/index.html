@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rewards & Redemption Demo</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
+        .header { text-align: center; color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .button { background: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
+        .button:hover { background: #0056b3; }
+        .result { background: #f8f9fa; padding: 10px; margin: 10px 0; border-radius: 4px; }
+        .success { border-left: 4px solid #28a745; }
+        .error { border-left: 4px solid #dc3545; }
+        .input-group { margin: 10px 0; }
+        .input-group label { display: inline-block; width: 150px; }
+        .input-group input, .input-group select { padding: 5px; width: 200px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏆 Rewards & Redemption System Demo</h1>
+        </div>
+
+        <div class="section">
+            <h3>📊 Member Dashboard</h3>
+            <div class="input-group">
+                <label>Member ID:</label>
+                <select id="memberId">
+                    <option value="member1">Member 1 (12,000 pts)</option>
+                    <option value="member2">Member 2 (8,500 pts)</option>
+                </select>
+            </div>
+            <button class="button" onclick="loadCategories()">Load Categories</button>
+            <button class="button" onclick="loadInsights()">Load Insights</button>
+            <div id="result" class="result" style="display:none;"></div>
+        </div>
+
+        <div class="section">
+            <h3>🛍️ Redemption Catalog</h3>
+            <button class="button" onclick="loadCatalog()">Browse Catalog</button>
+            <div class="input-group">
+                <label>Catalog ID:</label>
+                <input type="text" id="catalogId" placeholder="redeem_1" value="redeem_1">
+            </div>
+            <button class="button" onclick="processRedemption()">Process Redemption</button>
+        </div>
+    </div>
+
+    <script>
+        function showResult(data) {
+            const element = document.getElementById('result');
+            element.style.display = 'block';
+            element.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        }
+
+        function loadCategories() {
+            showResult({message: "Categories loaded", categories: ["Dining (3x)", "Gas (2x)", "Grocery (2.5x)"]});
+        }
+
+        function loadInsights() {
+            const memberId = document.getElementById('memberId').value;
+            showResult({member_id: memberId, total_spending: 1200, total_points: 3600, recommendations: ["Use dining category more"]});
+        }
+
+        function loadCatalog() {
+            showResult({items: [{name: "Statement Credit $25", points: 2500}, {name: "Flight Credit", points: 15000}]});
+        }
+
+        function processRedemption() {
+            const memberId = document.getElementById('memberId').value;
+            const catalogId = document.getElementById('catalogId').value;
+            showResult({success: true, transaction_id: "txn_123", points_used: 2500, remaining_balance: 9500});
+        }
+    </script>
+</body>
+</html>
